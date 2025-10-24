@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Sparkles, Flower2, Armchair, ShoppingBasket, ArrowRight, Star } from 'lucide-react'
+import ProductCard from '../../components/ProductCard/ProductCard'
 
 const heroImage = "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1920&h=1080&fit=crop"
 const makeup = "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=400&fit=crop"
@@ -9,7 +10,7 @@ const grocery = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400
 
 
 
-function HomePage() {
+function Home() {
     const [hoveredCard, setHoveredCard] = useState(null)
     const categories = [
         { id: 1, name: 'Beauty', icon: Sparkles, image: makeup, color: '#FF6B9D' },
@@ -22,13 +23,13 @@ function HomePage() {
         <div className='min-h-screen relative overflow-hidden'>
             {/* Background Image with Overlay */}
             <div className="fixed inset-0 z-0">
-                <img 
-                    src={heroImage} 
+                <img
+                    src={heroImage}
                     alt="Shopping"
                     className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-br from-[#00073f]/90 via-[#00073f]/70 to-[#1a1a5f]/80"></div>
-                
+
                 {/* Animated Circles */}
                 <div className="absolute top-20 left-10 w-72 h-72 bg-[#BFA6A0]/20 rounded-full blur-3xl animate-pulse"></div>
                 <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#BFA6A0]/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
@@ -94,8 +95,8 @@ function HomePage() {
                                         onMouseEnter={() => setHoveredCard(cat.id)}
                                         onMouseLeave={() => setHoveredCard(null)}
                                     >
-                                        <img 
-                                            src={cat.image} 
+                                        <img
+                                            src={cat.image}
                                             alt={cat.name}
                                             className="w-full h-48 object-cover rounded-t-3xl"
                                         />
@@ -137,7 +138,7 @@ function HomePage() {
 
                         {/* Description */}
                         <p className="text-xl sm:text-2xl text-white/80 mb-12 max-w-3xl">
-                            Discover premium products across beauty, fragrances, furniture, and fresh groceries. 
+                            Discover premium products across beauty, fragrances, furniture, and fresh groceries.
                             Quality you can trust, delivered with care.
                         </p>
 
@@ -146,7 +147,7 @@ function HomePage() {
                             {categories.map((cat) => {
                                 const Icon = cat.icon
                                 return (
-                                    <div 
+                                    <div
                                         key={cat.id}
                                         className="group bg-white/10 backdrop-blur-sm hover:bg-white/20 border border-white/20 hover:border-[#BFA6A0]/50 rounded-2xl px-6 py-4 transition-all duration-300 cursor-pointer flex items-center gap-3"
                                     >
@@ -183,6 +184,36 @@ function HomePage() {
                 </div>
             </section>
 
+        
+            {/* ===== ProductCard section ===== */}
+            <section className="relative z-20 py-12 lg:py-20">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    {/* Glass wrapper to match Home's main card style */}
+                    <div className="bg-white/6 backdrop-blur-2xl rounded-3xl p-6 sm:p-8 lg:p-12 border border-white/10 shadow-2xl">
+                        {/* Heading row */}
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                            <div>
+                                <h2 className="text-2xl sm:text-3xl font-bold text-white">Featured Products</h2>
+                                <p className="text-sm text-white/70 mt-1">Hand-picked items across Beauty, Fragrances, Furniture & Groceries</p>
+                            </div>
+
+                            {/* small CTA - keep it subtle */}
+                            <div className="flex items-center gap-3">
+                                <button className="hidden sm:inline-flex items-center gap-2 text-sm font-semibold bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20 hover:bg-white/20 transition">
+                                    View all
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* ProductCard (keeps its own grid inside) */}
+                        <div className="mt-4">
+                            {/* pass products if you have them in Home, else ProductCard will use its demo list */}
+                            <ProductCard />
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             {/* Bottom Features */}
             <section className="relative z-10 py-20 bg-gradient-to-t from-[#00073f]/50 to-transparent">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -205,4 +236,4 @@ function HomePage() {
     )
 }
 
-export default HomePage
+export default Home
