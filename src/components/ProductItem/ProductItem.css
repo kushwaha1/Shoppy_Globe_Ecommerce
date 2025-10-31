@@ -1,0 +1,148 @@
+.card {
+  --accent-color: #ffd426;
+  position: relative;
+  width: 240px;
+  background: white;
+  border-radius: 1rem;
+  padding: 0.3rem;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 50px 30px -20px;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+/* Product Card Styles */
+.product-card {
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Image Container */
+.product-image {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.product-image__img {
+  transition: transform 0.4s ease;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.product-card:hover .product-image__img {
+  transform: scale(1.05);
+}
+
+/* Badge */
+.product-badge > div {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+
+.product-card:hover .product-badge > div {
+  transform: translateY(-2px);
+}
+
+/* Title */
+.product-title {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.4;
+  min-height: 2.8em;
+  transition: color 0.2s ease;
+}
+
+.product-card:hover .product-title {
+  color: #BFA6A0;
+}
+
+/* Price */
+.product-price {
+  color: #fff;
+  letter-spacing: -0.02em;
+  display: inline-block;
+}
+
+/* Heart icon */
+.product-card button[aria-label="Add to wishlist"] {
+  transition: all 0.2s ease;
+}
+
+.product-card button[aria-label="Add to wishlist"]:hover {
+  transform: scale(1.1);
+}
+
+.product-card button[aria-label="Add to wishlist"]:hover [class*="Heart"] {
+  fill: rgba(239, 68, 68, 0.3);
+}
+
+/* Add to Cart Button */
+.product-add-btn {
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.product-add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(191, 166, 160, 0.3);
+}
+
+.product-add-btn:active {
+  transform: translateY(0);
+}
+
+.product-add-btn [class*="ShoppingCart"] {
+  transition: transform 0.2s ease;
+}
+
+.product-add-btn:hover [class*="ShoppingCart"] {
+  transform: scale(1.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .product-card {
+    min-height: 380px;
+  }
+  
+  .product-title {
+    font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .product-card {
+    min-height: 400px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .product-card {
+    min-height: 440px;
+  }
+}
+
+/* Utility classes */
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* Smooth scroll behavior */
+* {
+  scroll-behavior: smooth;
+}
