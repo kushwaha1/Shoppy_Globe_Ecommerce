@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
 function ProductApiCalling() {
@@ -11,8 +10,9 @@ function ProductApiCalling() {
         async function apiCalling() {
             try {
                 setLoading(true);
-                const response = await axios.get(API);
-                setProducts(response.data.products || []);
+                const response = await fetch(API);
+                const res = await response.json();
+                setProducts(res.products || []);
                 setError(null);
             } catch (err) {
                 setError(err.message);
