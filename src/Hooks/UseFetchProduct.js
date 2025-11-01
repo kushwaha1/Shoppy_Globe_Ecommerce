@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-function ProductApiCalling() {
+function UseFetchProducts() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -27,4 +27,4 @@ function ProductApiCalling() {
     return { products, loading, error }
 }
 
-export default ProductApiCalling
+export default UseFetchProducts

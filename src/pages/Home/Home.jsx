@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Sparkles, Flower2, Armchair, ShoppingBasket, ArrowRight, Star } from 'lucide-react'
-import ProductList from '../../components/ProductList/ProductList'
+import { Sparkles, Flower2, Armchair, ShoppingBasket, ArrowRight } from 'lucide-react'
+import "./Home.css"
+import TopRatedProducts from '../../components/TopRatedProducts/TopRatedProducts'
 
 const heroImage = "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1920&h=1080&fit=crop"
 const makeup = "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=400&fit=crop"
@@ -19,14 +20,6 @@ function Home() {
         { id: 4, name: 'Groceries', icon: ShoppingBasket, image: grocery, color: '#34D399' }
     ]
 
-    const featuredProducts = [
-        { id: 1, title: 'Hydrating Glow Serum', category: 'Beauty', price: 24.99, rating: 4.8, img: makeup },
-        { id: 2, title: 'Blossom Eau de Parfum', category: 'Fragrances', price: 79.0, rating: 4.9, img: fragrance },
-        { id: 3, title: 'Soft Linen Sofa', category: 'Furniture', price: 499.0, rating: 4.6, img: furniture },
-        { id: 4, title: 'Organic Almonds (500g)', category: 'Groceries', price: 12.5, rating: 4.7, img: grocery },
-    ]
-
-
     return (
         <div className='min-h-screen relative overflow-hidden'>
             {/* Background Image with Overlay */}
@@ -40,14 +33,14 @@ function Home() {
 
                 {/* Animated Circles */}
                 <div className="absolute top-20 left-10 w-72 h-72 bg-[#BFA6A0]/20 rounded-full blur-3xl animate-pulse"></div>
-                <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#BFA6A0]/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+                <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#BFA6A0]/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
             </div>
 
             <section className='relative w-full min-h-screen flex items-center overflow-hidden'>
                 {/* Animated Background */}
                 <div className="absolute inset-0 opacity-20">
                     <div className="absolute top-20 left-20 w-96 h-96 bg-[#BFA6A0] rounded-full blur-3xl animate-pulse"></div>
-                    <div className="absolute bottom-20 right-20 w-96 h-96 bg-[#BFA6A0] rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+                    <div className="absolute bottom-20 right-20 w-96 h-96 bg-[#BFA6A0] rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
                 </div>
 
                 <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-10">
@@ -109,8 +102,8 @@ function Home() {
                                             className="w-full h-48 object-cover rounded-t-3xl"
                                         />
                                         <div className="p-6 space-y-3">
-                                            <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{backgroundColor: cat.color + '20'}}>
-                                                <Icon className="w-6 h-6" style={{color: cat.color}} />
+                                            <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: cat.color + '20' }}>
+                                                <Icon className="w-6 h-6" style={{ color: cat.color }} />
                                             </div>
                                             <h3 className="text-xl font-bold text-[#00073f]">{cat.name}</h3>
                                             <p className="text-sm text-gray-600">Explore collection →</p>
@@ -121,13 +114,6 @@ function Home() {
                         </div>
                     </div>
                 </div>
-
-                <style jsx>{`
-                    @keyframes float {
-                        0%, 100% { transform: translateY(0px) rotate(var(--rotate)); }
-                        50% { transform: translateY(-20px) rotate(var(--rotate)); }
-                    }
-                `}</style>
             </section>
 
             {/* Main Content */}
@@ -186,7 +172,7 @@ function Home() {
                     {/* Floating Elements */}
                     <div className="hidden lg:block">
                         <div className="absolute -right-20 top-20 w-40 h-40 bg-[#BFA6A0]/20 backdrop-blur-xl rounded-3xl rotate-12 animate-pulse"></div>
-                        <div className="absolute -left-20 bottom-20 w-32 h-32 bg-[#BFA6A0]/20 backdrop-blur-xl rounded-3xl -rotate-12 animate-pulse" style={{animationDelay: '0.5s'}}></div>
+                        <div className="absolute -left-20 bottom-20 w-32 h-32 bg-[#BFA6A0]/20 backdrop-blur-xl rounded-3xl -rotate-12 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
                     </div>
 
                 </div>
@@ -195,7 +181,7 @@ function Home() {
 
             {/* === Other sections === */}
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4">
-                    <ProductList products={featuredProducts} />
+                    <TopRatedProducts />
             </section>
 
             {/* Bottom Features */}
