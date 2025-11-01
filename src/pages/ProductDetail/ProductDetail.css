@@ -1,0 +1,532 @@
+/* Product Detail Page */
+.product-detail-page {
+  animation: pageLoad 0.5s ease-out;
+}
+
+@keyframes pageLoad {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Breadcrumb */
+.breadcrumb-nav {
+  animation: slideDown 0.4s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.back-link:hover {
+  transform: translateX(-4px);
+}
+
+/* Product Container */
+.product-container {
+  animation: fadeInContent 0.6s ease-out 0.1s both;
+}
+
+@keyframes fadeInContent {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Image Gallery */
+.image-gallery {
+  animation: slideInFromLeft 0.6s ease-out;
+  display: flex;
+  gap: 1rem;
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Thumbnails - Vertical Layout */
+.thumbnail-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  animation: slideUp 0.5s ease-out 0.3s both;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.thumbnail-item {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.thumbnail-item:hover {
+  transform: translateY(-3px);
+}
+
+/* Main Image */
+.main-image-wrapper {
+  flex: 1;
+  transition: all 0.3s ease;
+}
+
+.main-image-wrapper:hover {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+}
+
+.main-product-image {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.main-image-holder:hover .main-product-image {
+  transform: scale(1.08);
+}
+
+/* Product Details */
+.product-details {
+  animation: slideInFromRight 0.6s ease-out;
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Brand & Stock */
+.brand-stock-section {
+  animation: fadeIn 0.4s ease-out 0.2s both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.brand-name {
+  transition: color 0.2s ease;
+}
+
+.stock-badge {
+  animation: badgePop 0.5s ease-out 0.3s both;
+}
+
+@keyframes badgePop {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Title */
+.product-main-title {
+  animation: titleSlide 0.5s ease-out 0.3s both;
+  line-height: 1.2;
+}
+
+@keyframes titleSlide {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Tags */
+.tags-section {
+  animation: fadeIn 0.4s ease-out 0.6s both;
+}
+
+.tag-pill {
+  transition: all 0.3s ease;
+  animation: tagAppear 0.4s ease-out both;
+}
+
+.tag-pill:nth-child(1) { animation-delay: 0.7s; }
+.tag-pill:nth-child(2) { animation-delay: 0.75s; }
+.tag-pill:nth-child(3) { animation-delay: 0.8s; }
+.tag-pill:nth-child(4) { animation-delay: 0.85s; }
+.tag-pill:nth-child(5) { animation-delay: 0.9s; }
+
+@keyframes tagAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.tag-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(147, 51, 234, 0.2);
+}
+
+/* Rating */
+.rating-review-section {
+  animation: fadeIn 0.4s ease-out 0.4s both;
+}
+
+.rating-display {
+  transition: all 0.3s ease;
+}
+
+.rating-display:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.25);
+}
+
+/* Pricing */
+.pricing-section {
+  animation: priceReveal 0.6s ease-out 0.5s both;
+}
+
+@keyframes priceReveal {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.current-price {
+  animation: priceGlow 2s ease-in-out infinite;
+}
+
+@keyframes priceGlow {
+  0%, 100% {
+    text-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  }
+  50% {
+    text-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  }
+}
+
+.discount-pill {
+  animation: discountPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes discountPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Description */
+.description-box {
+  animation: fadeIn 0.4s ease-out 0.7s both;
+}
+
+/* Quantity Picker */
+.quantity-picker {
+  animation: fadeIn 0.4s ease-out 0.8s both;
+}
+
+.qty-btn {
+  transition: all 0.3s ease;
+}
+
+.qty-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2);
+}
+
+.qty-btn:active {
+  transform: scale(0.95);
+}
+
+.qty-value {
+  animation: numberPop 0.3s ease;
+}
+
+@keyframes numberPop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Add to Cart Button */
+.add-cart-button {
+  animation: buttonSlide 0.5s ease-out 0.9s both;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes buttonSlide {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.add-cart-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.add-cart-button:hover::before {
+  left: 100%;
+}
+
+.add-cart-button:hover {
+  transform: translateY(-3px);
+}
+
+.add-cart-button:active {
+  transform: translateY(-1px);
+}
+
+/* Responsive Design */
+
+/* Tablets and Below (1024px) */
+@media (max-width: 1024px) {
+  .product-container {
+    gap: 2rem;
+  }
+
+  .product-main-title {
+    font-size: 2rem;
+  }
+  
+  .current-price {
+    font-size: 2.5rem;
+  }
+
+  .image-gallery {
+    gap: 0.75rem;
+  }
+
+  .thumbnail-item {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+
+/* Mobile Devices (768px) */
+@media (max-width: 768px) {
+  .product-container {
+    gap: 1.5rem;
+  }
+
+  .product-main-title {
+    font-size: 1.75rem;
+  }
+  
+  .current-price {
+    font-size: 2rem;
+  }
+
+  .original-price {
+    font-size: 1rem;
+  }
+
+  /* Stack thumbnails horizontally on mobile */
+  .image-gallery {
+    flex-direction: column-reverse;
+  }
+
+  .thumbnail-gallery {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+
+  .thumbnail-item {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+
+  .main-image-wrapper {
+    margin-bottom: 0;
+  }
+
+  .brand-stock-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .rating-review-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .price-row {
+    flex-wrap: wrap;
+    gap: 0.5rem !important;
+  }
+
+  .quantity-selector {
+    justify-content: center;
+  }
+}
+
+/* Small Mobile (480px) */
+@media (max-width: 480px) {
+  .product-detail-page {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .breadcrumb-nav {
+    margin-bottom: 1rem;
+  }
+
+  .product-main-title {
+    font-size: 1.5rem;
+  }
+  
+  .current-price {
+    font-size: 1.75rem;
+  }
+
+  .original-price {
+    font-size: 0.875rem;
+  }
+
+  .discount-pill {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .tag-pill {
+    font-size: 0.75rem;
+    padding: 0.375rem 0.75rem;
+  }
+
+  .rating-display {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .section-heading {
+    font-size: 1rem;
+  }
+
+  .description-text {
+    font-size: 0.875rem;
+  }
+
+  .qty-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.25rem;
+  }
+
+  .qty-value {
+    font-size: 1.25rem;
+  }
+
+  .add-cart-button {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+
+  .thumbnail-item {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for thumbnails */
+.thumbnail-gallery::-webkit-scrollbar {
+  height: 6px;
+}
+
+.thumbnail-gallery::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+.thumbnail-gallery::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 10px;
+}
+
+.thumbnail-gallery::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
