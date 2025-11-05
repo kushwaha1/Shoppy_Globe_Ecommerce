@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import "./ProductItem.css";
 import UseFetchProducts from "../../Hooks/useFetchProduct";
 import { addToCart, removeFromCart, updateQuantity, selectCartItems } from "../../utils/cartSlice";
+import { selectSearchQuery } from "../../utils/searchSlice";
 
-function ProductItem({ showTopRatedOnly = false, showViewAllButton = false }) {
+function ProductItem({ title, showTopRatedOnly = false, showViewAllButton = false }) {
   const { products = [] } = UseFetchProducts();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -15,12 +16,28 @@ function ProductItem({ showTopRatedOnly = false, showViewAllButton = false }) {
   // read cart items from redux (using selector exported above)
   const cartItems = useSelector((state) => (state.cart && state.cart.items) || []);
 
-  const displayProducts = showTopRatedOnly
+    // read current search query from redux
+  const searchQuery = useSelector(selectSearchQuery).toLowerCase?.() || '';
+
+  let filterProducts = showTopRatedOnly
     ? products
         .filter(product => product.rating >= 4.0)
         .sort((a, b) => b.rating - a.rating)
         .slice(0, 8)
     : products;
+
+  // Apply search filter from redux (case-insensitive substring match)
+  if (searchQuery) {
+    const q = searchQuery.trim();
+    filterProducts = filterProducts.filter((p) => {
+      const titleMatch = (p.title || '').toLowerCase().includes(q);
+      const categoryMatch = (p.category || '').toLowerCase().includes(q);
+      // match either title or category
+      return titleMatch || categoryMatch;
+    });
+  }
+
+  const displayProducts = filterProducts;
 
   const getQty = (productId) => {
     const entry = cartItems.find(
@@ -68,7 +85,7 @@ function ProductItem({ showTopRatedOnly = false, showViewAllButton = false }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-gray-900">
-            {showTopRatedOnly ? `Top Rated Products` : `Showing ${displayProducts.length} result`}
+            {title ? title : `Showing ${displayProducts.length} results`}
           </h2>
           {showViewAllButton && (
             <Link
@@ -88,7 +105,7 @@ function ProductItem({ showTopRatedOnly = false, showViewAllButton = false }) {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold text-gray-900" style={showTopRatedOnly ? { color: "white" } : { color: "black" }}>
-          {showTopRatedOnly ? `Top Rated Products` : `Showing ${displayProducts.length} results`}
+          {title ? title : `Showing ${displayProducts.length} results`}
         </h2>
         {showViewAllButton && (
           <Link to="/products" className="hidden sm:inline-flex items-center text-white gap-2 text-sm font-semibold bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20 hover:bg-white/20 transition">
