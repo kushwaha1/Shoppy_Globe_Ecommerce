@@ -5,6 +5,7 @@ import App from './App'
 import ProductList from './components/ProductList/ProductList'
 import ProductDetail from './pages/ProductDetail/ProductDetail'
 import Cart from './pages/Cart/Cart'
+import NotFound from './pages/NotFound/NotFound'
 
 const router = createBrowserRouter([
     {
@@ -27,8 +28,9 @@ const router = createBrowserRouter([
                 path: "cart",
                 element: <Cart />
             }
-        ]
-    }
+        ],
+        errorElement: <NotFound />
+    },
 ])
 
 export default router
