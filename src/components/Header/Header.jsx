@@ -1,6 +1,6 @@
-import { Contact, Home, List, ShoppingCart, Search, User, Menu, X, ShoppingBasketIcon } from 'lucide-react'
-import React, { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Contact, Home, List, ShoppingCart, Menu, X, ShoppingBasketIcon } from 'lucide-react'
+import React, { useRef, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { selectCartCount } from '../../utils/cartSlice'
 import { useSelector } from "react-redux";
 
@@ -8,6 +8,8 @@ function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const cartCount = useSelector(selectCartCount); // derived count from store
     const cartRef = useRef();
+    const location = useLocation();
+    const currentPath = location.pathname;
 
     return (
         <header className='w-full bg-gradient-to-r from-[#00073f] via-[#0a1a4f] to-[#00073f] shadow-2xl sticky top-0 z-50 backdrop-blur-lg border-b border-[#BFA6A0]/20'>
@@ -32,16 +34,34 @@ function Header() {
                     {/* Right Section - Icons */}
                     <div className='flex items-center gap-2 sm:gap-3'>
                         {/* Desktop Navigation */}
-                        <nav className='hidden lg:flex items-center gap-2'>
-                            <Link to="/" className='flex gap-2 items-center px-5 py-2.5 rounded-full text-white hover:bg-[#BFA6A0]/20 hover:text-[#BFA6A0] transition-all duration-300 group border border-transparent hover:border-[#BFA6A0]/30'>
+                        <nav className='hidden lg:flex items-center gap-4'>
+                            <Link
+                                to="/"
+                                className={`flex gap-2 items-center px-5 py-2.5 rounded-full transition-all duration-300 ${currentPath === '/'
+                                        ? 'bg-[#BFA6A0] text-[#00073f] scale-105 shadow-lg'
+                                        : 'text-white hover:bg-[#BFA6A0]/20 hover:text-[#BFA6A0]'
+                                    }`}
+                            >
                                 <Home className='w-5 h-5 group-hover:scale-110 transition-transform duration-300' />
                                 <span className='font-semibold'>Home</span>
                             </Link>
-                            <Link to="/products" className='flex gap-2 items-center px-5 py-2.5 rounded-full text-white hover:bg-[#BFA6A0]/20 hover:text-[#BFA6A0] transition-all duration-300 group border border-transparent hover:border-[#BFA6A0]/30'>
+                            <Link
+                                to="/products"
+                                className={`flex gap-2 items-center px-5 py-2.5 rounded-full transition-all duration-300 ${currentPath === '/products'
+                                        ? 'bg-[#BFA6A0] text-[#00073f] scale-105 shadow-lg'
+                                        : 'text-white hover:bg-[#BFA6A0]/20 hover:text-[#BFA6A0]'
+                                    }`}
+                            >
                                 <List className='w-5 h-5 group-hover:scale-110 transition-transform duration-300' />
                                 <span className='font-semibold'>Products</span>
                             </Link>
-                            <Link to="/checkout" className='flex gap-2 items-center px-5 py-2.5 rounded-full text-white hover:bg-[#BFA6A0]/20 hover:text-[#BFA6A0] transition-all duration-300 group border border-transparent hover:border-[#BFA6A0]/30'>
+                            <Link
+                                to="/checkout"
+                                className={`flex gap-2 items-center px-5 py-2.5 rounded-full transition-all duration-300 ${currentPath === '/checkout'
+                                        ? 'bg-[#BFA6A0] text-[#00073f] scale-105 shadow-lg'
+                                        : 'text-white hover:bg-[#BFA6A0]/20 hover:text-[#BFA6A0]'
+                                    }`}
+                            >
                                 <ShoppingBasketIcon className='w-5 h-5 group-hover:scale-110 transition-transform duration-300' />
                                 <span className='font-semibold'>Checkout</span>
                             </Link>
@@ -50,7 +70,10 @@ function Header() {
                         <Link
                             to="/cart"
                             ref={cartRef}
-                            className='relative flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-[#BFA6A0] to-[#D4BEB8] text-[#00073f] hover:scale-110 transition-all duration-300 group shadow-lg hover:shadow-[#BFA6A0]/50'
+                            className={`relative flex items-center justify-center w-11 h-11 rounded-xl transition-all duration-300 group shadow-lg hover:shadow-[#BFA6A0]/50 ${currentPath === '/cart'
+                                    ? 'bg-gradient-to-br from-[#BFA6A0] to-[#D4BEB8] text-[#00073f] scale-105 shadow-2xl ring-2 ring-[#BFA6A0]'
+                                    : 'text-white hover:scale-110 border-2 border-[#BFA6A0] shadow-[#BFA6A0]/50'
+                                }`}
                             aria-label="Shopping Cart"
                         >
                             <ShoppingCart className='w-5 h-5 group-hover:scale-110 transition-transform duration-300' />
@@ -79,7 +102,11 @@ function Header() {
                     <div className='space-y-2'>
                         <Link
                             to="/"
-                            className='flex items-center gap-4 px-5 py-4 rounded-xl bg-white/5 hover:bg-[#BFA6A0]/20 text-white hover:text-[#BFA6A0] transition-all duration-300 border border-white/10 hover:border-[#BFA6A0]/30'
+                            className={`flex items-center gap-4 px-5 py-4 rounded-xl transition-all duration-300 border border-white/10 ${
+                                currentPath === '/'
+                                    ? 'bg-[#BFA6A0] text-[#00073f] shadow-lg'
+                                    : 'bg-white/5 text-white hover:bg-[#BFA6A0]/20 hover:text-[#BFA6A0] hover:border-[#BFA6A0]/30'
+                                }`}
                             onClick={() => setIsMenuOpen(false)}
                         >
                             <Home className='w-5 h-5' />
@@ -87,7 +114,10 @@ function Header() {
                         </Link>
                         <Link
                             to="/products"
-                            className='flex items-center gap-4 px-5 py-4 rounded-xl bg-white/5 hover:bg-[#BFA6A0]/20 text-white hover:text-[#BFA6A0] transition-all duration-300 border border-white/10 hover:border-[#BFA6A0]/30'
+                            className={`flex items-center gap-4 px-5 py-4 rounded-xl transition-all duration-300 border border-white/10 ${currentPath === '/products'
+                                    ? 'bg-[#BFA6A0] text-[#00073f] shadow-lg'
+                                    : 'bg-white/5 text-white hover:bg-[#BFA6A0]/20 hover:text-[#BFA6A0] hover:border-[#BFA6A0]/30'
+                                }`}
                             onClick={() => setIsMenuOpen(false)}
                         >
                             <List className='w-5 h-5' />
@@ -95,7 +125,10 @@ function Header() {
                         </Link>
                         <Link
                             to="/checkout"
-                            className='flex items-center gap-4 px-5 py-4 rounded-xl bg-white/5 hover:bg-[#BFA6A0]/20 text-white hover:text-[#BFA6A0] transition-all duration-300 border border-white/10 hover:border-[#BFA6A0]/30'
+                            className={`flex items-center gap-4 px-5 py-4 rounded-xl transition-all duration-300 border border-white/10 ${currentPath === '/checkout'
+                                    ? 'bg-[#BFA6A0] text-[#00073f] shadow-lg'
+                                    : 'bg-white/5 text-white hover:bg-[#BFA6A0]/20 hover:text-[#BFA6A0] hover:border-[#BFA6A0]/30'
+                                }`}
                             onClick={() => setIsMenuOpen(false)}
                         >
                             <Contact className='w-5 h-5' />
