@@ -10,6 +10,7 @@ import {
   removeFromCart,
   updateQuantity 
 } from "../../utils/cartSlice";
+import LazyImage from "../../components/LazyImage/LazyImage";
 
 function Cart() {
   const items = useSelector(selectCartItems);
@@ -81,7 +82,7 @@ function Cart() {
                   <div className="flex gap-6">
                     {/* Product Image */}
                     <div className="flex-shrink-0">
-                      <img 
+                      <LazyImage 
                         src={item.image} 
                         alt={item.title}
                         className="w-32 h-32 object-cover rounded-xl bg-gray-100"

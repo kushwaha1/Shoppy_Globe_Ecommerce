@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Sparkles, Flower2, Armchair, ShoppingBasket, ArrowRight } from 'lucide-react'
 import "./Home.css"
 import TopRatedProducts from '../../components/TopRatedProducts/TopRatedProducts'
+import LazyImage from '../../components/LazyImage/LazyImage'
 
 const heroImage = "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1920&h=1080&fit=crop"
 const makeup = "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=400&fit=crop"
@@ -24,7 +25,7 @@ function Home() {
         <div className='min-h-screen relative overflow-hidden'>
             {/* Background Image with Overlay */}
             <div className="fixed inset-0 z-0">
-                <img
+                <LazyImage
                     src={heroImage}
                     alt="Shopping"
                     className="w-full h-full object-cover"
@@ -96,7 +97,7 @@ function Home() {
                                         onMouseEnter={() => setHoveredCard(cat.id)}
                                         onMouseLeave={() => setHoveredCard(null)}
                                     >
-                                        <img
+                                        <LazyImage
                                             src={cat.image}
                                             alt={cat.name}
                                             className="w-full h-48 object-cover rounded-t-3xl"

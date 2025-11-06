@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Trash } from "lucide-react";
 import { selectCartItems, selectCartSubtotal, removeFromCart } from "../../utils/cartSlice";
+import LazyImage from "../LazyImage/LazyImage";
 
 function CartDropdown({ onClose }) {
   const items = useSelector(selectCartItems) ?? [];e
@@ -25,7 +26,7 @@ function CartDropdown({ onClose }) {
             <div className="space-y-3 max-h-56 overflow-auto pr-2">
               {items.map(item => (
                 <div key={item.id} className="flex items-center gap-3">
-                  <img src={item.image} alt={item.title} className="w-12 h-12 object-cover rounded" loading="lazy" />
+                  <LazyImage src={item.image} alt={item.title} className="w-12 h-12 object-cover rounded" loading="lazy" />
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-medium text-white truncate">{item.title}</div>
                     <div className="text-xs text-white/60">{item.quantity} × ${Number(item.price).toFixed(2)}</div>

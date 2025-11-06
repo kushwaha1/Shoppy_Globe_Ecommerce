@@ -3,6 +3,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Trash } from "lucide-react";
 import { removeFromCart, updateQuantity } from "../../utils/cartSlice"; // corrected path
+import LazyImage from "../LazyImage/LazyImage";
 
 function CartItem({ item }) {
   
@@ -14,7 +15,7 @@ function CartItem({ item }) {
 
   return (
     <div className="flex items-center gap-4 p-4 border-b">
-      <img src={item.images?.[0]} alt={item.title} className="w-20 h-20 object-cover rounded" />
+      <LazyImage src={item.images?.[0]} alt={item.title} className="w-20 h-20 object-cover rounded" />
       <div className="flex-1 min-w-0">
         <div className="font-semibold truncate">{item.title}</div>
         <div className="text-sm text-gray-400">Unit: ${Number(item.price).toFixed(2)}</div>

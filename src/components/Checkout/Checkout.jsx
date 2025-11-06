@@ -17,6 +17,7 @@ import {
     clearCart,
 } from "../../utils/cartSlice";
 import "./Checkout.css"
+import LazyImage from "../LazyImage/LazyImage";
 
 function Checkout() {
     const navigate = useNavigate();
@@ -343,7 +344,7 @@ function Checkout() {
                                     <div className="space-y-3 mb-6 max-h-64 overflow-y-auto">
                                         {cartItems.map((item) => (
                                             <div key={item.id} className="flex gap-3">
-                                                <img
+                                                <LazyImage
                                                     src={item.image}
                                                     alt={item.title}
                                                     className="w-16 h-16 object-cover rounded-lg bg-gray-100"

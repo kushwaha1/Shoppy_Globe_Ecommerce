@@ -1,4 +1,3 @@
-// ProductDetail.jsx
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { Star, ShoppingCart, ArrowLeft, Minus, Plus } from "lucide-react";
@@ -6,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./ProductDetail.css";
 import UseFetchProducts from "../../Hooks/useFetchProduct";
 import { addToCart, removeFromCart, updateQuantity } from "../../utils/cartSlice";
+import LazyImage from "../../components/LazyImage/LazyImage";
 
 function ProductDetail() {
   const { id } = useParams();
@@ -120,7 +120,7 @@ function ProductDetail() {
 
             <div className="main-image-wrapper bg-white rounded-3xl p-8 shadow-sm mb-4">
               <div className="main-image-holder aspect-square overflow-hidden rounded-2xl bg-gray-100">
-                <img src={currentImage} alt={product.title} className="main-product-image w-full h-full object-contain" />
+                <LazyImage src={currentImage} alt={product.title} className="main-product-image w-full h-full object-contain" />
               </div>
             </div>
           </div>

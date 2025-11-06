@@ -7,6 +7,7 @@ import "./ProductItem.css";
 import UseFetchProducts from "../../Hooks/useFetchProduct";
 import { addToCart, removeFromCart, updateQuantity, selectCartItems } from "../../utils/cartSlice";
 import { selectSearchQuery } from "../../utils/searchSlice";
+import LazyImage from "../LazyImage/LazyImage";
 
 function ProductItem({ title, showTopRatedOnly = false, showViewAllButton = false }) {
   const { products = [] } = UseFetchProducts();
@@ -126,7 +127,7 @@ function ProductItem({ title, showTopRatedOnly = false, showViewAllButton = fals
                 </div>
 
                 <div className="product-image w-full relative bg-white/5" style={{ paddingBottom: "100%" }}>
-                  <img src={product.images?.[0] || product.img || product.thumbnail} alt={product.title} className="product-image__img absolute inset-0 w-full h-full object-cover" />
+                  <LazyImage src={product.images?.[0] || product.img || product.thumbnail} alt={product.title} className="product-image__img absolute inset-0 w-full h-full object-cover" />
                 </div>
 
                 <div className="p-4 sm:p-5 flex flex-col flex-1">
