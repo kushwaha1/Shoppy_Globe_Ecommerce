@@ -1,37 +1,80 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
-import Home from './pages/Home/Home'
-import App from './App'
-import ProductList from './components/ProductList/ProductList'
-import ProductDetail from './pages/ProductDetail/ProductDetail'
-import Cart from './pages/Cart/Cart'
 import NotFound from './pages/NotFound/NotFound'
-import Checkout from './components/Checkout/Checkout'
+import { Loader2 } from 'lucide-react'
+
+const App = lazy(() => import('./App'));
+const Home = lazy(() => import('./pages/Home/Home'));
+const ProductList = lazy(() => import('./components/ProductList/ProductList'));
+const ProductDetail = lazy(() => import('./pages/ProductDetail/ProductDetail'));
+const Cart = lazy(() => import('./pages/Cart/Cart'));
+const Checkout = lazy(() => import('./components/Checkout/Checkout'));
+
+// Loading component
+const PageLoader = () => (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+            <Loader2 className="w-12 h-12 animate-spin text-blue-600 mx-auto mb-4" />
+            <p className="text-gray-600 font-medium">Loading...</p>
+        </div>
+    </div>
+);
+
+// Wrapper component with Suspense
+const SuspenseWrapper = ({ children }) => (
+    <Suspense fallback={<PageLoader />}>
+        {children}
+    </Suspense>
+);
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <App />,
+        element: (
+            <SuspenseWrapper>
+                <App />
+            </SuspenseWrapper>
+        ),
         children: [
             {
                 path: "/",
-                element: <Home />
+                element: (
+                    <SuspenseWrapper>
+                        <Home />
+                    </SuspenseWrapper>
+                ),
             },
             {
                 path: "/products",
-                element: <ProductList />
+                element: (
+                    <SuspenseWrapper>
+                        <ProductList />
+                    </SuspenseWrapper>
+                )
             },
             {
                 path: "/products/:id",
-                element: <ProductDetail />
+                element: (
+                    <SuspenseWrapper>
+                        <ProductDetail />
+                    </SuspenseWrapper>
+                )
             },
             {
                 path: "cart",
-                element: <Cart />
+                element: (
+                    <SuspenseWrapper>
+                        <Cart />
+                    </SuspenseWrapper>
+                )
             },
             {
                 path: "checkout",
-                element: <Checkout />
+                element: (
+                    <SuspenseWrapper>
+                        <Checkout />
+                    </SuspenseWrapper>
+                )
             }
         ],
         errorElement: <NotFound />
