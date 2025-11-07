@@ -3,38 +3,50 @@ import React, { useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { selectCartCount } from '../../utils/cartSlice'
 import { useSelector } from "react-redux";
+import "./Header.css"
 
 function Header() {
+    // State to toggle mobile menu
     const [isMenuOpen, setIsMenuOpen] = useState(false)
-    const cartCount = useSelector(selectCartCount); // derived count from store
+
+    // Get cart count from Redux store
+    const cartCount = useSelector(selectCartCount);
+
+    // Ref for cart icon (could be used for animation/popups)
     const cartRef = useRef();
+
+    // Get current path to highlight active link
     const location = useLocation();
     const currentPath = location.pathname;
 
     return (
         <header className='w-full bg-gradient-to-r from-[#00073f] via-[#0a1a4f] to-[#00073f] shadow-2xl sticky top-0 z-50 backdrop-blur-lg border-b border-[#BFA6A0]/20'>
             <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-                {/* Main Header */}
+                {/* Main Header Container */}
                 <div className='flex justify-between items-center h-16 sm:h-20'>
-                    {/* Logo Section */}
+
+                    {/* === Logo Section === */}
                     <Link to="/" className='flex gap-3 items-center group'>
+                        {/* Logo with gradient and hover effects */}
                         <div className='relative'>
-                            <div className='w-11 h-11 sm:w-14 sm:h-14 bg-gradient-to-br from-[#BFA6A0] to-[#D4BEB8] rounded-2xl flex items-center justify-center text-[#00073f] font-black text-lg sm:text-2xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-xl'>
+                            <div className='w-11 h-11 sm:w-14 sm:h-14 bg-gradient-to-br logo from-[#BFA6A0] to-[#D4BEB8] rounded-2xl flex items-center justify-center text-[#00073f] font-black text-lg sm:text-2xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-xl'>
                                 SG
                             </div>
+                            {/* Hover glow effect */}
                             <div className='absolute inset-0 bg-[#BFA6A0] rounded-2xl opacity-0 group-hover:opacity-40 blur-xl transition-all duration-300'></div>
                         </div>
                         <div>
-                            <h1 className='text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight leading-none'>
+                            <h1 className='logo text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight leading-none'>
                                 ShoppyGlobe
                             </h1>
                         </div>
                     </Link>
 
-                    {/* Right Section - Icons */}
+                    {/* === Right Section - Icons & Navigation === */}
                     <div className='flex items-center gap-2 sm:gap-3'>
-                        {/* Desktop Navigation */}
+                        {/* Desktop Navigation Links */}
                         <nav className='hidden lg:flex items-center gap-4'>
+                            {/* Home Link */}
                             <Link
                                 to="/"
                                 className={`flex gap-2 items-center px-5 py-2.5 rounded-full transition-all duration-300 ${currentPath === '/'
@@ -45,6 +57,8 @@ function Header() {
                                 <Home className='w-5 h-5 group-hover:scale-110 transition-transform duration-300' />
                                 <span className='font-semibold'>Home</span>
                             </Link>
+
+                            {/* Products Link */}
                             <Link
                                 to="/products"
                                 className={`flex gap-2 items-center px-5 py-2.5 rounded-full transition-all duration-300 ${currentPath === '/products'
@@ -55,6 +69,8 @@ function Header() {
                                 <List className='w-5 h-5 group-hover:scale-110 transition-transform duration-300' />
                                 <span className='font-semibold'>Products</span>
                             </Link>
+
+                            {/* Checkout Link */}
                             <Link
                                 to="/checkout"
                                 className={`flex gap-2 items-center px-5 py-2.5 rounded-full transition-all duration-300 ${currentPath === '/checkout'
@@ -67,6 +83,7 @@ function Header() {
                             </Link>
                         </nav>
 
+                        {/* Cart Icon */}
                         <Link
                             to="/cart"
                             ref={cartRef}
@@ -77,6 +94,7 @@ function Header() {
                             aria-label="Shopping Cart"
                         >
                             <ShoppingCart className='w-5 h-5 group-hover:scale-110 transition-transform duration-300' />
+                            {/* Cart count badge */}
                             {cartCount >= 0 && (
                                 <span className='absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center animate-pulse shadow-lg border-2 border-[#00073f]'>
                                     {cartCount}
@@ -84,7 +102,7 @@ function Header() {
                             )}
                         </Link>
 
-                        {/* Mobile Menu Button */}
+                        {/* Mobile Menu Toggle Button */}
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                             className='lg:hidden flex items-center justify-center w-11 h-11 rounded-xl bg-white/5 hover:bg-[#BFA6A0]/20 text-white transition-all duration-300 border border-white/10'
@@ -96,14 +114,14 @@ function Header() {
                 </div>
             </div>
 
-            {/* Mobile Menu */}
+            {/* === Mobile Menu === */}
             <div className={`lg:hidden overflow-hidden transition-all duration-300 ${isMenuOpen ? 'max-h-[500px]' : 'max-h-0'}`}>
                 <nav className='px-4 py-5 bg-[#00073f]/95 backdrop-blur-lg border-t border-[#BFA6A0]/20'>
                     <div className='space-y-2'>
+                        {/* Home Link */}
                         <Link
                             to="/"
-                            className={`flex items-center gap-4 px-5 py-4 rounded-xl transition-all duration-300 border border-white/10 ${
-                                currentPath === '/'
+                            className={`flex items-center gap-4 px-5 py-4 rounded-xl transition-all duration-300 border border-white/10 ${currentPath === '/'
                                     ? 'bg-[#BFA6A0] text-[#00073f] shadow-lg'
                                     : 'bg-white/5 text-white hover:bg-[#BFA6A0]/20 hover:text-[#BFA6A0] hover:border-[#BFA6A0]/30'
                                 }`}
@@ -112,6 +130,8 @@ function Header() {
                             <Home className='w-5 h-5' />
                             <span className='font-semibold'>Home</span>
                         </Link>
+
+                        {/* Products Link */}
                         <Link
                             to="/products"
                             className={`flex items-center gap-4 px-5 py-4 rounded-xl transition-all duration-300 border border-white/10 ${currentPath === '/products'
@@ -123,6 +143,8 @@ function Header() {
                             <List className='w-5 h-5' />
                             <span className='font-semibold'>Products</span>
                         </Link>
+
+                        {/* Checkout Link */}
                         <Link
                             to="/checkout"
                             className={`flex items-center gap-4 px-5 py-4 rounded-xl transition-all duration-300 border border-white/10 ${currentPath === '/checkout'
