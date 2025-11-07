@@ -1,36 +1,64 @@
-/* Ensure thumbnails scroll nicely when overflow */
+/* ===================== THUMBNAIL GALLERY ===================== */
+
+/* Container for thumbnails (vertical on desktop) */
 .thumbnail-gallery {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  animation: slideUp 0.5s ease-out 0.3s both;
-  max-height: 60vh;
-  padding-right: 0.5rem;
-  flex: 0 0 auto;          /* do not grow or shrink unexpectedly */
-  z-index: 3;              /* keep thumbnails above shadows but not overlapped */
+  display: flex;                 /* Use flex layout for thumbnails */
+  flex-direction: column;        /* Stack thumbnails vertically */
+  gap: 0.75rem;                  /* Space between thumbnails */
+  animation: slideUp 0.5s ease-out 0.3s both; /* subtle slide-up animation */
+  max-height: 60vh;              /* Keep thumbnails within viewport height */
+  padding-right: 0.5rem;         /* Space for scrollbar if needed */
+  flex: 0 0 auto;                /* Prevent thumbnails from growing or shrinking unexpectedly */
+  z-index: 3;                    /* Keep thumbnails above shadows but below overlays */
 }
 
-/* Make thumbnails look consistent on small screens */
+/* Ensure thumbnail images fit nicely */
 .thumbnail-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  width: 100%;                   /* Full width of thumbnail container */
+  height: 100%;                  /* Full height of thumbnail container */
+  object-fit: contain;           /* Preserve image aspect ratio */
 }
 
-/* Ensure main image scales and centers nicely */
+/* Thumbnail button sizing (desktop/tablet) */
+.thumbnail-item {
+  width: 80px;
+  height: 80px;
+  flex: 0 0 auto;                /* Fix size, prevent shrinking/growing */
+  border-radius: 0.75rem;        /* Rounded corners for thumbnails */
+  overflow: hidden;              /* Crop overflow */
+}
+
+/* ===================== MAIN IMAGE ===================== */
+
+/* Container to center main image properly */
 .main-image-holder {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: center;           /* Center vertically */
+  justify-content: center;       /* Center horizontally */
+  overflow: hidden;              /* Prevent image overflow */
 }
 
+/* Actual main image styling */
 .main-product-image {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+  max-width: 100%;               /* Scale down if needed */
+  max-height: 100%;              /* Scale down if needed */
+  object-fit: contain;           /* Maintain aspect ratio */
 }
 
-/* Button utility classes */
+/* Wrapper for main image */
+.main-image-wrapper {
+  flex: 1 1 0%;                  /* Grow to fill remaining space */
+  min-width: 0;                  /* Allow shrinking without overflow */
+  z-index: 1;                    /* Behind thumbnails */
+  background: white;             /* Keep background white */
+  border-radius: 1.5rem;         /* Rounded corners */
+  padding: 2rem;                 /* Internal spacing */
+  box-sizing: border-box;        /* Include padding in width/height */
+}
+
+/* ===================== BUTTONS ===================== */
+
+/* Primary button styling */
 .primary-btn {
   background: linear-gradient(90deg, #2563eb, #6366f1);
   color: #fff;
@@ -41,11 +69,13 @@
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
+/* Hover effect for primary button */
 .primary-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 18px 40px rgba(99,102,241,0.16);
+  transform: translateY(-3px);   /* Slight lift on hover */
+  box-shadow: 0 18px 40px rgba(99,102,241,0.16); /* Stronger shadow */
 }
 
+/* Secondary button styling */
 .secondary-btn {
   background: #fff;
   color: #1f2937;
@@ -54,90 +84,67 @@
   border-radius: 0.75rem;
 }
 
-/* Quantity selector center on mobile */
+/* ===================== QUANTITY SELECTOR ===================== */
+
+/* Center quantity selector on mobile */
 .quantity-selector {
   justify-content: center;
 }
 
-/* minor spacing */
+/* Minor spacing fixes */
 .product-details .flex.gap-3 {
   gap: 0.75rem;
 }
 
-/* Fix long titles wrap */
+/* Fix long product titles from overflowing */
 .product-main-title {
   word-break: break-word;
 }
 
-/* ===== Universal layout fixes (desktop + tablet) ===== */
+/* ===================== LAYOUT FIXES ===================== */
+
+/* Overall image gallery layout */
 .image-gallery {
   display: flex;
-  align-items: flex-start; /* keep thumbnail column and main image top-aligned */
-  gap: 1rem;               /* space between thumbnails and main image */
+  align-items: flex-start;       /* Align main image and thumbnail column at top */
+  gap: 1rem;                     /* Space between thumbnails and main image */
 }
 
-/* thumbnail button sizing (desktop/tablet) */
-.thumbnail-item {
-  width: 80px;
-  height: 80px;
-  flex: 0 0 auto;
-  border-radius: 0.75rem;
-  overflow: hidden;
-}
-
-/* Main image area should take remaining space and NOT overflow thumbnails */
-.main-image-wrapper {
-  flex: 1 1 0%;            /* grow to fill remaining space */
-  min-width: 0;            /* allows flex child to shrink properly (prevents overflow) */
-  z-index: 1;
-  background: white;       /* keep existing look */
-  border-radius: 1.5rem;
-  padding: 2rem;
-  box-sizing: border-box;
-}
-
-/* Ensure image itself doesn't overflow container */
-.main-image-holder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-/* ===== Mobile / small screens: stack thumbnails below with spacing ===== */
+/* ===================== MOBILE / SMALL SCREENS ===================== */
 @media (max-width: 768px) {
+  /* Stack gallery vertically on small screens */
   .image-gallery {
     flex-direction: column;
     gap: 0.5rem;
     align-items: stretch;
   }
 
+  /* Thumbnails in horizontal scroll row */
   .thumbnail-gallery {
     flex-direction: row;
-    overflow-x: auto;
+    overflow-x: auto;            /* Allow scrolling if overflow */
     max-width: 100%;
     padding: 0.4rem 0.5rem;
     gap: 0.6rem;
     justify-content: flex-start;
-    order: 2;
+    order: 2;                    /* Place after main image */
   }
 
   .thumbnail-item {
     width: 64px;
     height: 64px;
-    min-width: 64px;
+    min-width: 64px;             /* Prevent shrinking */
   }
 
+  /* Reduce padding for main image on mobile */
   .main-image-wrapper {
-    padding: 1rem;             /* reduce padding for small screens */
-    margin-bottom: 1.25rem;    /* breathing room so thumbnails never overlap */
-    order: 1;
+    padding: 1rem;
+    margin-bottom: 1.25rem;      /* Ensure space between image and thumbnails */
+    order: 1;                    /* Main image appears first */
   }
 }
 
-/* ===== Extra: very large screens — keep a little more left gap ===== */
+/* ===================== LARGE SCREENS ===================== */
 @media (min-width: 1400px) {
   .thumbnail-item {
     width: 96px;
@@ -145,7 +152,6 @@
     min-width: 96px;
   }
   .main-image-wrapper {
-    padding: 3rem;
+    padding: 3rem;               /* More padding on large screens */
   }
 }
-

@@ -25,9 +25,11 @@ export default function Footer() {
           {/* Company Info */}
           <div className="space-y-6 animate-fadeInUp">
             <div>
-              <h3 className="text-2xl font-bold text-[#BFA6A0] mb-2">
-                ShoppyGlobe
-              </h3>
+              <Link to="/">
+                <h3 className="text-2xl font-bold text-[#BFA6A0] mb-2">
+                  ShoppyGlobe
+                </h3>
+              </Link>
               <p className="text-white/70 text-sm leading-relaxed">
                 Premium quality products delivered with passion. Your satisfaction is our priority.
               </p>

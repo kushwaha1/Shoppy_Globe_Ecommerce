@@ -3,29 +3,32 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { Star, ShoppingCart, ArrowLeft, Minus, Plus } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import "./ProductDetail.css";
-import UseFetchProducts from "../../Hooks/useFetchProduct";
-import { addToCart, removeFromCart, updateQuantity } from "../../utils/cartSlice";
-import LazyImage from "../../components/LazyImage/LazyImage";
+import UseFetchProducts from "../../Hooks/useFetchProduct"; // Custom hook to fetch products
+import { addToCart, removeFromCart, updateQuantity } from "../../utils/cartSlice"; // Redux actions for cart
+import LazyImage from "../../components/LazyImage/LazyImage"; // Lazy loaded images
 
 function ProductDetail() {
-  const { id } = useParams();
-  const { products = [] } = UseFetchProducts();
+  const { id } = useParams(); // Get product id from URL
+  const { products = [] } = UseFetchProducts(); // Fetch all products
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [product, setProduct] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(0);
-  const [quantity, setQuantity] = useState(0);
+  // Local states
+  const [product, setProduct] = useState(null); // Current product details
+  const [selectedImage, setSelectedImage] = useState(0); // Selected image index in gallery
+  const [quantity, setQuantity] = useState(0); // Current quantity in cart
 
+  // Access cart items from Redux store
   const cartItems = useSelector((state) => (state.cart && state.cart.items) || []);
 
+  // Find the product based on the id param whenever products or id changes
   useEffect(() => {
     const foundProduct = products.find((p) => Number(p.id) === Number(id));
     setProduct(foundProduct || null);
-    if (foundProduct) setSelectedImage(0);
+    if (foundProduct) setSelectedImage(0); // Reset gallery to first image
   }, [id, products]);
 
-  // sync with redux cart (can be 0)
+  // Sync quantity with cart from Redux store
   useEffect(() => {
     if (!product) return;
     const entry = cartItems.find(
@@ -35,14 +38,23 @@ function ProductDetail() {
     setQuantity(Number(qty));
   }, [product, cartItems]);
 
+  // Add product to cart with quantity 1
   const handleAddToCart = (e) => {
     e?.preventDefault();
     e?.stopPropagation();
     if (!product) return;
-    dispatch(addToCart({ id: product.id, title: product.title, price: product.price, image: product.images?.[0] ?? product.thumbnail, product, quantity: 1 }));
+    dispatch(addToCart({
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      image: product.images?.[0] ?? product.thumbnail,
+      product,
+      quantity: 1
+    }));
     setQuantity(1);
   };
 
+  // Increment product quantity in cart
   const handleIncrement = (e) => {
     e?.preventDefault();
     e?.stopPropagation();
@@ -51,6 +63,7 @@ function ProductDetail() {
     setQuantity((prev) => Number(prev || 0) + 1);
   };
 
+  // Decrement product quantity in cart or remove if 0
   const handleDecrement = (e) => {
     e?.preventDefault();
     e?.stopPropagation();
@@ -64,6 +77,7 @@ function ProductDetail() {
     }
   };
 
+  // Buy now: ensure product is in cart then navigate to checkout
   const handleBuyNow = (e) => {
     e?.preventDefault();
     e?.stopPropagation();
@@ -75,6 +89,7 @@ function ProductDetail() {
     navigate("/checkout");
   };
 
+  // If product not found, show a fallback
   if (!product) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -89,12 +104,14 @@ function ProductDetail() {
     );
   }
 
-  const images = product.images || [product.thumbnail];
-  const currentImage = images[selectedImage] || product.thumbnail;
+  const images = product.images || [product.thumbnail]; // All product images
+  const currentImage = images[selectedImage] || product.thumbnail; // Currently selected image
 
   return (
     <div className="product-detail-page bg-gray-50 min-h-screen py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* Breadcrumb / Back link */}
         <div className="breadcrumb-nav mb-6">
           <Link to="/products" className="back-link inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 font-medium transition-colors">
             <ArrowLeft className="w-5 h-5" />
@@ -102,8 +119,12 @@ function ProductDetail() {
           </Link>
         </div>
 
+        {/* Product grid: images + details */}
         <div className="product-container grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+          {/* Left column: Image gallery */}
           <div className="image-gallery flex">
+            {/* Thumbnail gallery */}
             {images.length > 1 && (
               <div className="thumbnail-gallery gap-3">
                 {images.map((img, index) => (
@@ -118,6 +139,7 @@ function ProductDetail() {
               </div>
             )}
 
+            {/* Main product image */}
             <div className="main-image-wrapper bg-white rounded-3xl p-8 shadow-sm mb-4">
               <div className="main-image-holder aspect-square overflow-hidden rounded-2xl bg-gray-100">
                 <LazyImage src={currentImage} alt={product.title} className="main-product-image w-full h-full object-contain" />
@@ -125,7 +147,10 @@ function ProductDetail() {
             </div>
           </div>
 
+          {/* Right column: Product details */}
           <div className="product-details">
+
+            {/* Brand + stock status */}
             <div className="brand-stock-section flex items-center justify-between mb-4">
               <div className="brand-info flex items-center gap-2">
                 <span className="brand-label text-sm text-gray-500">Brand:</span>
@@ -136,8 +161,10 @@ function ProductDetail() {
               </div>
             </div>
 
+            {/* Product title */}
             <h1 className="product-main-title text-3xl lg:text-4xl font-bold text-gray-900 mb-4 leading-tight">{product.title}</h1>
 
+            {/* Tags */}
             {product.tags && product.tags.length > 0 && (
               <div className="tags-section mb-4">
                 <div className="tags-list flex flex-wrap gap-2">
@@ -150,6 +177,7 @@ function ProductDetail() {
               </div>
             )}
 
+            {/* Rating and review */}
             <div className="rating-review-section flex items-center gap-4 mb-4">
               <div className="rating-display flex items-center gap-2 bg-amber-50 px-4 py-2 rounded-lg">
                 <Star className="w-5 h-5 fill-amber-400 text-amber-400" />
@@ -158,6 +186,7 @@ function ProductDetail() {
               <span className="review-count text-gray-600">({product.reviews?.length || Math.floor(Math.random() * 300) + 50} reviews)</span>
             </div>
 
+            {/* Pricing */}
             <div className="pricing-section rounded-2xl mb-6">
               <div className="price-row flex items-end gap-4 mb-2">
                 <span className="current-price text-3xl font-extrabold text-gray-900">${Number(product.price).toFixed(2)}</span>
@@ -170,11 +199,13 @@ function ProductDetail() {
               </div>
             </div>
 
+            {/* Description */}
             <div className="description-box mb-6">
               <h3 className="section-heading text-lg font-bold text-gray-900 mb-3">About this product</h3>
               <p className="description-text text-gray-700 leading-relaxed">{product.description || "No description available"}</p>
             </div>
 
+            {/* Quantity selector */}
             <div className="quantity-picker mb-4">
               <h3 className="section-heading text-lg font-bold text-gray-900 mb-3">Quantity</h3>
               {quantity > 0 ? (
@@ -192,6 +223,7 @@ function ProductDetail() {
               )}
             </div>
 
+            {/* Add to Cart / Buy Now button */}
             <div className="flex gap-3 items-center">
               {quantity === 0 ? (
                 <button onClick={handleAddToCart} className="add-cart-button w-full flex items-center justify-center gap-3 cursor-pointer primary-btn">

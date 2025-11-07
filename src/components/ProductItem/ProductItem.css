@@ -1,140 +1,161 @@
+/* =========================
+   General Card Styles
+   ========================= */
 .card {
-  --accent-color: #ffd426;
-  position: relative;
-  width: 240px;
-  background: white;
-  border-radius: 1rem;
-  padding: 0.3rem;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 50px 30px -20px;
-  transition: all 0.3s ease;
+  --accent-color: #ffd426; /* Custom CSS variable for accent color */
+  position: relative;       /* Needed for absolute positioning of children */
+  width: 240px;             /* Fixed card width */
+  background: white;        /* Card background */
+  border-radius: 1rem;      /* Rounded corners */
+  padding: 0.3rem;          /* Inner spacing */
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 50px 30px -20px; /* Soft shadow */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
 }
 
 .card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px); /* Slight lift on hover for 3D effect */
 }
 
-/* Product Card Styles */
+/* =========================
+   Product Card Styles
+   ========================= */
 .product-card {
-  min-height: 420px;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
+  min-height: 420px;              /* Minimum height for consistent cards */
+  display: flex;                  /* Flex layout to stack elements vertically */
+  flex-direction: column;         /* Top-to-bottom layout */
+  position: relative;             /* For child absolute elements */
+  overflow: hidden;               /* Hide overflowing content */
+  transition: all 0.3s ease;     /* Smooth transition on hover */
 }
 
-/* Image Container */
+/* =========================
+   Product Image Container
+   ========================= */
 .product-image {
-  position: relative;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.05);
+  position: relative;             /* Needed for absolute image positioning */
+  overflow: hidden;               /* Prevent image overflow */
+  background: rgba(255, 255, 255, 0.05); /* Slight translucent background */
 }
 
 .product-image__img {
-  transition: transform 0.4s ease;
-  object-fit: cover;
+  transition: transform 0.4s ease; /* Smooth zoom effect */
+  object-fit: cover;               /* Ensure image covers container without distortion */
   width: 100%;
   height: 100%;
 }
 
 .product-card:hover .product-image__img {
-  transform: scale(1.05);
+  transform: scale(1.05);         /* Zoom-in effect on hover */
 }
 
-/* Badge */
+/* =========================
+   Product Category Badge
+   ========================= */
 .product-badge > div {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Soft shadow for badge */
+  transition: all 0.2s ease;                  /* Smooth lift on hover */
 }
 
 .product-card:hover .product-badge > div {
-  transform: translateY(-2px);
+  transform: translateY(-2px); /* Lift badge slightly on hover */
 }
 
-/* Title */
+/* =========================
+   Product Title
+   ========================= */
 .product-title {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  line-height: 1.4;
-  min-height: 2.8em;
-  transition: color 0.2s ease;
+  overflow: hidden;                      /* Hide overflowing text */
+  display: -webkit-box;                  /* Required for line clamp */
+  -webkit-line-clamp: 2;                 /* Show max 2 lines */
+  -webkit-box-orient: vertical;          /* Vertical orientation for clamp */
+  line-height: 1.4;                      /* Line height */
+  min-height: 2.8em;                     /* Ensure space for 2 lines */
+  transition: color 0.2s ease;           /* Smooth color transition on hover */
 }
 
 .product-card:hover .product-title {
-  color: #00073f;
+  color: #00073f;                        /* Darker text on hover */
 }
 
-/* Price */
+/* =========================
+   Product Price
+   ========================= */
 .product-price {
-  color: #fff;
-  letter-spacing: -0.02em;
+  color: #fff;              /* Default price text color */
+  letter-spacing: -0.02em;  /* Slight tightening of letters */
   display: inline-block;
 }
 
-/* Heart icon */
+/* =========================
+   Heart Icon (Wishlist Button)
+   ========================= */
 .product-card button[aria-label="Add to wishlist"] {
-  transition: all 0.2s ease;
+  transition: all 0.2s ease; /* Smooth hover effect */
 }
 
 .product-card button[aria-label="Add to wishlist"]:hover {
-  transform: scale(1.1);
+  transform: scale(1.1);     /* Slightly enlarge button on hover */
 }
 
 .product-card button[aria-label="Add to wishlist"]:hover [class*="Heart"] {
-  fill: rgba(239, 68, 68, 0.3);
+  fill: rgba(239, 68, 68, 0.3); /* Change heart color on hover */
 }
 
-/* Add to Cart Button */
+/* =========================
+   Add to Cart Button
+   ========================= */
 .product-add-btn {
-  white-space: nowrap;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+  white-space: nowrap;         /* Prevent text wrapping */
+  transition: all 0.3s ease;  /* Smooth hover effects */
+  position: relative;          /* For inner elements */
+  overflow: hidden;            /* Hide overflow */
 }
 
 .product-add-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(191, 166, 160, 0.3);
+  transform: translateY(-2px); /* Slight lift on hover */
+  box-shadow: 0 8px 16px rgba(191, 166, 160, 0.3); /* Shadow effect */
 }
 
 .product-add-btn:active {
-  transform: translateY(0);
+  transform: translateY(0);    /* Reset lift on click */
 }
 
 .product-add-btn [class*="ShoppingCart"] {
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease; /* Smooth icon zoom on hover */
 }
 
 .product-add-btn:hover [class*="ShoppingCart"] {
-  transform: scale(1.1);
+  transform: scale(1.1);       /* Zoom-in cart icon */
 }
 
-/* Responsive adjustments */
+/* =========================
+   Responsive Adjustments
+   ========================= */
 @media (max-width: 640px) {
   .product-card {
-    min-height: 380px;
+    min-height: 380px;         /* Slightly shorter on small screens */
   }
   
   .product-title {
-    font-size: 0.95rem;
+    font-size: 0.95rem;        /* Reduce title size for mobile */
   }
 }
 
 @media (min-width: 641px) and (max-width: 1024px) {
   .product-card {
-    min-height: 400px;
+    min-height: 400px;         /* Medium screen adjustments */
   }
 }
 
 @media (min-width: 1025px) {
   .product-card {
-    min-height: 440px;
+    min-height: 440px;         /* Larger cards on desktop */
   }
 }
 
-/* Utility classes */
+/* =========================
+   Utility Classes
+   ========================= */
 .line-clamp-2 {
   overflow: hidden;
   display: -webkit-box;
@@ -142,7 +163,9 @@
   -webkit-box-orient: vertical;
 }
 
-/* Smooth scroll behavior */
+/* =========================
+   Smooth Scroll for entire page
+   ========================= */
 * {
   scroll-behavior: smooth;
 }

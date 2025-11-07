@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom'
 import NotFound from './pages/NotFound/NotFound'
 import { Loader2 } from 'lucide-react'
 
+// Route Lazy Loading
 const App = lazy(() => import('./App'));
 const Home = lazy(() => import('./pages/Home/Home'));
 const ProductList = lazy(() => import('./components/ProductList/ProductList'));

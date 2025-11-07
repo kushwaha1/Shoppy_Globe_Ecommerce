@@ -1,37 +1,119 @@
-// src/components/CartItem.jsx
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Trash } from "lucide-react";
-import { removeFromCart, updateQuantity } from "../../utils/cartSlice"; // corrected path
+import { Trash2, Plus, Minus } from "lucide-react";
+import { removeFromCart, updateQuantity } from "../../utils/cartSlice";
 import LazyImage from "../LazyImage/LazyImage";
 
+/**
+ * CartItem component represents a single product in the shopping cart.
+ * Allows incrementing/decrementing quantity, removing the item, and shows the total price.
+ * @param {object} item - Cart item object containing product details (id, title, price, quantity, image, etc.)
+ */
 function CartItem({ item }) {
-  
   const dispatch = useDispatch();
 
-  const inc = () => dispatch(updateQuantity({ id: item.id, quantity: (item.quantity || 1) + 1 }));
-  const dec = () => dispatch(updateQuantity({ id: item.id, quantity: Math.max(0, (item.quantity || 1) - 1) }));
-  const remove = () => dispatch(removeFromCart(item.id));
+  // -----------------------------
+  // Increment quantity by 1
+  // -----------------------------
+  const handleIncrement = () => {
+    dispatch(updateQuantity({ id: item.id, quantity: item.quantity + 1 }));
+  };
+
+  // -----------------------------
+  // Decrement quantity by 1
+  // If quantity becomes 0, remove the item from cart
+  // -----------------------------
+  const handleDecrement = () => {
+    if (item.quantity > 1) {
+      dispatch(updateQuantity({ id: item.id, quantity: item.quantity - 1 }));
+    } else {
+      dispatch(removeFromCart(item.id));
+    }
+  };
+
+  // -----------------------------
+  // Remove the item completely from cart
+  // -----------------------------
+  const handleRemove = () => {
+    dispatch(removeFromCart(item.id));
+  };
 
   return (
-    <div className="flex items-center gap-4 p-4 border-b">
-      <LazyImage src={item.images?.[0]} alt={item.title} className="w-20 h-20 object-cover rounded" />
-      <div className="flex-1 min-w-0">
-        <div className="font-semibold truncate">{item.title}</div>
-        <div className="text-sm text-gray-400">Unit: ${Number(item.price).toFixed(2)}</div>
+    <div className="bg-white rounded-2xl shadow-sm p-6 hover:shadow-md transition-shadow">
+      <div className="flex gap-6">
+        {/* -----------------------------
+            Product Image
+            Uses LazyImage component to optimize loading
+        ----------------------------- */}
+        <div className="flex-shrink-0">
+          <LazyImage
+            src={item.image}
+            alt={item.title}
+            className="w-32 h-32 object-cover rounded-xl bg-gray-100"
+          />
+        </div>
+
+        {/* -----------------------------
+            Product Details Section
+            Contains title, price, remove button, quantity controls, and total price
+        ----------------------------- */}
+        <div className="flex-1 min-w-0">
+          {/* Title and Remove Button */}
+          <div className="flex justify-between items-start mb-3">
+            <div className="flex-1">
+              <h3 className="text-lg font-semibold text-gray-900 mb-1 line-clamp-2">
+                {item.title}
+              </h3>
+              <p className="text-sm text-gray-500">
+                ${Number(item.price).toFixed(2)} each
+              </p>
+            </div>
+
+            {/* Remove Button */}
+            <button
+              onClick={handleRemove}
+              className="ml-4 p-2 text-red-500 hover:bg-red-50 rounded-lg cursor-pointer transition-colors"
+              aria-label="Remove item"
+            >
+              <Trash2 className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Quantity Controls and Total Price */}
+          <div className="flex items-center justify-between">
+            {/* Quantity Controls */}
+            <div className="flex items-center gap-3">
+              {/* Decrement Button */}
+              <button
+                onClick={handleDecrement}
+                className="w-10 h-10 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
+              >
+                <Minus className="w-4 h-4" />
+              </button>
+
+              {/* Display Current Quantity */}
+              <span className="text-lg font-semibold min-w-[3rem] text-center">
+                {item.quantity}
+              </span>
+
+              {/* Increment Button */}
+              <button
+                onClick={handleIncrement}
+                className="w-10 h-10 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
+              >
+                <Plus className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Total Price */}
+            <div className="text-right">
+              <p className="text-2xl font-bold text-gray-900">
+                ${(item.quantity * item.price).toFixed(2)}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div className="flex items-center gap-2">
-        <button onClick={dec} className="px-2 py-1 border rounded">-</button>
-        <div className="w-8 text-center">{item.quantity}</div>
-        <button onClick={inc} className="px-2 py-1 border rounded">+</button>
-      </div>
-
-      <div className="w-24 text-right font-semibold">${(item.quantity * item.price).toFixed(2)}</div>
-
-      <button onClick={remove} className="ml-3 p-2 rounded hover:bg-red-50">
-        <Trash className="w-4 h-4 text-red-500" />
-      </button>
     </div>
   );
 }

@@ -3,7 +3,9 @@ import { Sparkles, Flower2, Armchair, ShoppingBasket, ArrowRight } from 'lucide-
 import "./Home.css"
 import TopRatedProducts from '../../components/TopRatedProducts/TopRatedProducts'
 import LazyImage from '../../components/LazyImage/LazyImage'
+import { Link } from 'react-router-dom'
 
+// Hero and category images
 const heroImage = "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1920&h=1080&fit=crop"
 const makeup = "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=400&fit=crop"
 const fragrance = "https://images.unsplash.com/photo-1541643600914-78b084683601?w=400&h=400&fit=crop"
@@ -13,7 +15,10 @@ const grocery = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400
 
 
 function Home() {
+    // State to track which category card is being hovered
     const [hoveredCard, setHoveredCard] = useState(null)
+
+    // Categories to display as floating cards and pills
     const categories = [
         { id: 1, name: 'Beauty', icon: Sparkles, image: makeup, color: '#FF6B9D' },
         { id: 2, name: 'Fragrances', icon: Flower2, image: fragrance, color: '#C084FC' },
@@ -23,36 +28,42 @@ function Home() {
 
     return (
         <div className='min-h-screen relative overflow-hidden'>
-            {/* Background Image with Overlay */}
+            {/* === Background Section === */}
             <div className="fixed inset-0 z-0">
+                {/* Hero image with lazy loading */}
                 <LazyImage
                     src={heroImage}
                     alt="Shopping"
                     className="w-full h-full object-cover"
                 />
+                {/* Gradient overlay on hero image */}
                 <div className="absolute inset-0 bg-gradient-to-br from-[#00073f]/90 via-[#00073f]/70 to-[#1a1a5f]/80"></div>
 
-                {/* Animated Circles */}
+                {/* Decorative animated circles */}
                 <div className="absolute top-20 left-10 w-72 h-72 bg-[#BFA6A0]/20 rounded-full blur-3xl animate-pulse"></div>
                 <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#BFA6A0]/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
             </div>
 
+            {/* === Hero Section Content === */}
             <section className='relative w-full min-h-screen flex items-center overflow-hidden'>
-                {/* Animated Background */}
+                {/* Faint animated background elements */}
                 <div className="absolute inset-0 opacity-20">
                     <div className="absolute top-20 left-20 w-96 h-96 bg-[#BFA6A0] rounded-full blur-3xl animate-pulse"></div>
                     <div className="absolute bottom-20 right-20 w-96 h-96 bg-[#BFA6A0] rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
                 </div>
 
+                {/* Main hero content */}
                 <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-10">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                        {/* Left: Content */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">                        
+                        {/* Left: Hero Text and Buttons */}
                         <div className="space-y-6 text-center lg:text-left">
+                            {/* Highlight badge */}
                             <div className="inline-flex items-center gap-2 bg-[#BFA6A0]/20 backdrop-blur-sm px-6 py-3 rounded-full border border-[#BFA6A0]/30">
                                 <Sparkles className="w-5 h-5 text-[#BFA6A0]" />
                                 <span className="text-[#BFA6A0] font-semibold">Premium Shopping Experience</span>
                             </div>
 
+                            {/* Main heading */}
                             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight">
                                 Discover Your
                                 <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#BFA6A0] to-[#D4BEB8]">
@@ -60,25 +71,35 @@ function Home() {
                                 </span>
                             </h1>
 
+                            {/* Subheading */}
                             <p className="text-xl text-white/80 max-w-lg mx-auto lg:mx-0">
                                 Explore our curated collection of beauty, fragrances, furniture, and fresh groceries. Quality meets convenience.
                             </p>
 
+                            {/* Hero Buttons */}
                             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                                <button className="group bg-gradient-to-r from-[#BFA6A0] to-[#D4BEB8] text-[#00073f] font-bold px-8 py-4 rounded-full shadow-2xl hover:shadow-[#BFA6A0]/50 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2">
-                                    Start Shopping
-                                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                                </button>
-                                <button className="bg-white/10 backdrop-blur-sm text-white font-semibold px-8 py-4 rounded-full border-2 border-white/30 hover:bg-white/20 transition-all duration-300">
-                                    View Collections
-                                </button>
+                                {/* Primary button */}
+                                <Link to="/products">
+                                    <button className="group bg-gradient-to-r cursor-pointer from-[#BFA6A0] to-[#D4BEB8] text-[#00073f] font-bold px-8 py-4 rounded-full shadow-2xl hover:shadow-[#BFA6A0]/50 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2">
+                                        Start Shopping
+                                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                    </button>
+                                </Link>
+                                
+                                {/* Secondary button */}
+                                <Link to="/products">
+                                    <button className="bg-white/10 backdrop-blur-sm cursor-pointer text-white font-semibold px-8 py-4 rounded-full border-2 border-white/30 hover:bg-white/20 transition-all duration-300">
+                                        View Collections
+                                    </button>
+                                </Link>
                             </div>
                         </div>
 
-                        {/* Right: Floating Cards */}
+                        {/* Right: Floating Category Cards */}
                         <div className="relative h-[510px] hidden lg:block">
                             {categories.map((cat, idx) => {
                                 const Icon = cat.icon
+                                // Predefined positions and rotations for floating cards
                                 const positions = [
                                     { top: '0%', left: '0%', rotate: '-5deg' },
                                     { top: '5%', right: '0%', rotate: '5deg' },
@@ -97,11 +118,13 @@ function Home() {
                                         onMouseEnter={() => setHoveredCard(cat.id)}
                                         onMouseLeave={() => setHoveredCard(null)}
                                     >
+                                        {/* Category image */}
                                         <LazyImage
                                             src={cat.image}
                                             alt={cat.name}
                                             className="w-full h-48 object-cover rounded-t-3xl"
                                         />
+                                        {/* Category details */}
                                         <div className="p-6 space-y-3">
                                             <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: cat.color + '20' }}>
                                                 <Icon className="w-6 h-6" style={{ color: cat.color }} />
@@ -117,10 +140,10 @@ function Home() {
                 </div>
             </section>
 
-            {/* Main Content */}
+            {/* === Main Content Section === */}
             <section className='relative z-10 min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-10'>
                 <div className="max-w-5xl w-full">
-                    {/* Glassmorphism Card */}
+                    {/* Glassmorphism card for main info */}
                     <div className="bg-white/10 backdrop-blur-2xl rounded-3xl sm:rounded-[3rem] p-8 sm:p-12 lg:p-16 border border-white/20 shadow-2xl">
 
                         {/* Main Heading */}
@@ -155,7 +178,7 @@ function Home() {
                             })}
                         </div>
 
-                        {/* Stats */}
+                        {/* Stats Section */}
                         <div className="grid grid-cols-3 gap-6 mt-16 pt-8 border-t border-white/20">
                             {[
                                 { value: '50K+', label: 'Products' },
@@ -170,7 +193,7 @@ function Home() {
                         </div>
                     </div>
 
-                    {/* Floating Elements */}
+                    {/* Decorative floating elements */}
                     <div className="hidden lg:block">
                         <div className="absolute -right-20 top-20 w-40 h-40 bg-[#BFA6A0]/20 backdrop-blur-xl rounded-3xl rotate-12 animate-pulse"></div>
                         <div className="absolute -left-20 bottom-20 w-32 h-32 bg-[#BFA6A0]/20 backdrop-blur-xl rounded-3xl -rotate-12 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
@@ -179,17 +202,16 @@ function Home() {
                 </div>
             </section>
 
-
-            {/* === Other sections === */}
+            {/* === Top Rated Products Section === */}
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4">
-                    <TopRatedProducts />
+                <TopRatedProducts />
             </section>
 
-            {/* Bottom Features */}
+            {/* === Bottom Features Section === */}
             <section className="relative z-10 py-20 bg-gradient-to-t from-[#00073f]/50 to-transparent">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {[
+                        {[ 
                             { icon: '🚚', title: 'Free Delivery', desc: 'On orders above $50' },
                             { icon: '💳', title: 'Secure Payment', desc: '100% safe transactions' },
                             { icon: '🎁', title: 'Best Offers', desc: 'Exclusive deals daily' }

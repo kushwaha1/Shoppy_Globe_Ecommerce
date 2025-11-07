@@ -20,13 +20,15 @@ import "./Checkout.css"
 import LazyImage from "../LazyImage/LazyImage";
 
 function Checkout() {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const navigate = useNavigate();  // hook to navigate programmatically
+    const dispatch = useDispatch();  // redux dispatcher
 
+    // Retrieve cart details from redux store
     const cartItems = useSelector(selectCartItems);
     const subtotal = useSelector(selectCartSubtotal);
     const totalItems = useSelector(selectCartCount);
 
+    // State for form data
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -39,20 +41,23 @@ function Checkout() {
         paymentMethod: "card",
     });
 
-    // field-wise errors
+    // Field-specific errors
     const [errors, setErrors] = useState({});
     const [generalError, setGeneralError] = useState("");
 
+    // Popup notification state
     const [popup, setPopup] = useState({ show: false, type: "", message: "" });
 
+    // Tax, shipping and total calculations
     const tax = subtotal * 0.1;
-    const shipping = subtotal > 50 ? 0 : 10;
+    const shipping = subtotal > 50 ? 0 : 10; // free shipping for subtotal > $50
     const total = subtotal + tax + shipping;
 
+    // Handle input changes for form fields
     const handleInputChange = (e) => {
         const { name, value } = e.target;
 
-        // sanitize some numeric fields
+        // Ensure only numbers for phone and zipCode
         if (name === "phone") {
             setFormData((prev) => ({ ...prev, [name]: value.replace(/\D/g, "") }));
         } else if (name === "zipCode") {
@@ -61,7 +66,7 @@ function Checkout() {
             setFormData((prev) => ({ ...prev, [name]: value }));
         }
 
-        // clear the specific field error on change
+        // Clear individual field error
         setErrors((prev) => {
             if (!prev || !prev[name]) return prev;
             const next = { ...prev };
@@ -69,16 +74,17 @@ function Checkout() {
             return next;
         });
 
-        // clear generalError if any
+        // Clear general error if any
         if (generalError) setGeneralError("");
     };
 
-    // Validate and return object of errors (empty object = no errors)
+    // Validate form and return errors
     const buildValidationErrors = () => {
         const newErrors = {};
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const phoneRegex = /^[0-9]{10}$/;
 
+        // Check each required field
         if (!formData.firstName || !formData.firstName.trim()) newErrors.firstName = "Please enter your first name.";
         if (!formData.lastName || !formData.lastName.trim()) newErrors.lastName = "Please enter your last name.";
         if (!formData.email || !emailRegex.test(formData.email)) newErrors.email = "Please enter a valid email address.";
@@ -88,41 +94,43 @@ function Checkout() {
         if (!formData.state || !formData.state.trim()) newErrors.state = "Please enter your state.";
         if (!formData.zipCode || !formData.zipCode.trim()) newErrors.zipCode = "Please enter your ZIP code.";
 
-        // payment method required
+        // Payment method required
         if (!formData.paymentMethod) newErrors.paymentMethod = "Please select a payment method.";
 
-        return newErrors;
+        return newErrors; // empty object means no errors
     };
 
+    // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const newErrors = buildValidationErrors();
 
         if (Object.keys(newErrors).length > 0) {
+            // Show errors if validation fails
             setErrors(newErrors);
             setGeneralError("Please fix the highlighted errors.");
             setPopup({ show: true, type: "error", message: "Please fix the highlighted errors." });
-            // keep popup closable by user (we auto-hide too)
             setTimeout(() => setPopup((p) => ({ ...p, show: false })), 3000);
             return;
         }
 
-        // no errors -> proceed
+        // If validation passes
         setErrors({});
         setGeneralError("");
         setPopup({ show: true, type: "success", message: "Order Placed Successfully!" });
 
-        // clear cart in redux
+        // Clear cart in redux
         dispatch(clearCart());
 
-        // redirect after short delay
+        // Redirect after delay
         setTimeout(() => {
             setPopup({ show: false, type: "", message: "" });
             navigate("/");
         }, 3000);
     };
 
+    // Show empty cart message if cart is empty
     if (cartItems.length === 0 && !popup.show) {
         return (
             <div className="min-h-screen bg-gray-50 py-8">
@@ -156,11 +164,11 @@ function Checkout() {
 
     return (
         <>
-            {/* Popup */}
+            {/* Popup Notification */}
             {popup.show && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
                     <div className="bg-white rounded-2xl shadow-xl p-8 text-center max-w-sm relative animate-fadeIn">
-                        {/* ❌ Close button */}
+                        {/* Close button */}
                         <button
                             type="button"
                             onClick={() => setPopup({ show: false, type: "", message: "" })}
@@ -169,6 +177,7 @@ function Checkout() {
                             ✕
                         </button>
 
+                        {/* Popup Icon */}
                         {popup.type === "success" ? (
                             <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4 animate-bounce" />
                         ) : (
@@ -191,10 +200,11 @@ function Checkout() {
                 </div>
             )}
 
-
+            {/* Main Checkout Form */}
             <div className="min-h-screen bg-gray-50 py-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mb-8">
+                        {/* Back to Cart Button */}
                         <button
                             onClick={() => navigate("/cart")}
                             className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors"
@@ -207,9 +217,9 @@ function Checkout() {
 
                     <form onSubmit={handleSubmit} noValidate>
                         <div className="grid lg:grid-cols-3 gap-8">
-                            {/* Left Column - Forms */}
+                            {/* Left Column - Shipping & Payment */}
                             <div className="lg:col-span-2 space-y-6">
-                                {/* Shipping */}
+                                {/* Shipping Information Section */}
                                 <div className="bg-white rounded-2xl shadow-sm p-6">
                                     <div className="flex items-center gap-3 mb-6">
                                         <Truck className="w-6 h-6 text-blue-600" />
@@ -217,6 +227,7 @@ function Checkout() {
                                     </div>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {/* First Name Input */}
                                         <div>
                                             <label className="block text-sm font-medium text-gray-700 mb-2 required">
                                                 First Name
@@ -230,6 +241,7 @@ function Checkout() {
                                             {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>}
                                         </div>
 
+                                        {/* Last Name Input */}
                                         <div>
                                             <label className="block text-sm font-medium text-gray-700 mb-2 required">
                                                 Last Name
@@ -243,6 +255,7 @@ function Checkout() {
                                             {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>}
                                         </div>
 
+                                        {/* Email Input */}
                                         <div>
                                             <label className="block text-sm font-medium text-gray-700 mb-2 required">Email</label>
                                             <input
@@ -255,6 +268,7 @@ function Checkout() {
                                             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                                         </div>
 
+                                        {/* Phone Input */}
                                         <div>
                                             <label className="block text-sm font-medium text-gray-700 mb-2 required">Phone</label>
                                             <input
@@ -266,6 +280,7 @@ function Checkout() {
                                             {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
                                         </div>
 
+                                        {/* Address Input */}
                                         <div className="md:col-span-2">
                                             <label className="block text-sm font-medium text-gray-700 mb-2 required">Address</label>
                                             <input
@@ -277,6 +292,7 @@ function Checkout() {
                                             {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
                                         </div>
 
+                                        {/* City Input */}
                                         <div>
                                             <label className="block text-sm font-medium text-gray-700 mb-2 required">City</label>
                                             <input
@@ -288,6 +304,7 @@ function Checkout() {
                                             {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
                                         </div>
 
+                                        {/* State Input */}
                                         <div>
                                             <label className="block text-sm font-medium text-gray-700 mb-2 required">State</label>
                                             <input
@@ -299,6 +316,7 @@ function Checkout() {
                                             {errors.state && <p className="text-red-500 text-sm mt-1">{errors.state}</p>}
                                         </div>
 
+                                        {/* ZIP Code Input */}
                                         <div className="md:col-span-2">
                                             <label className="block text-sm font-medium text-gray-700 mb-2 required">ZIP Code</label>
                                             <input
@@ -312,7 +330,7 @@ function Checkout() {
                                     </div>
                                 </div>
 
-                                {/* Payment Method - dropdown + conditional fields */}
+                                {/* Payment Method Section */}
                                 <div className="bg-white rounded-2xl shadow-sm p-6">
                                     <div className="flex items-center gap-3 mb-6">
                                         <CreditCard className="w-6 h-6 text-green-600" />
@@ -380,20 +398,15 @@ function Checkout() {
                                         </div>
                                     </div>
 
-                                    {/* Show general error above button if present */}
-                                    {generalError && <p className="text-red-500 mb-3 text-sm">{generalError}</p>}
+                                    {/* General error above Place Order */}
+                                    {generalError && <p className="text-red-500 text-sm mb-3">{generalError}</p>}
 
                                     <button
                                         type="submit"
-                                        className="w-full px-6 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all"
+                                        className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg"
                                     >
                                         Place Order
                                     </button>
-
-                                    <div className="mt-4 flex items-center justify-center gap-2 text-sm text-gray-500">
-                                        <ShieldCheck className="w-4 h-4 text-green-600" />
-                                        <span>Secure checkout</span>
-                                    </div>
                                 </div>
                             </div>
                         </div>
