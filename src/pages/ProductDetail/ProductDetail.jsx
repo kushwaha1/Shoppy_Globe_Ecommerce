@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { Star, ShoppingCart, ArrowLeft, Minus, Plus } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import "./ProductDetail.css";
-import UseFetchProducts from "../../Hooks/useFetchProduct"; // Custom hook to fetch products
+import UseFetchProducts from "../../Hooks/useFetchProduct.js"; // Custom hook to fetch products
 import { addToCart, removeFromCart, updateQuantity } from "../../utils/cartSlice"; // Redux actions for cart
 import LazyImage from "../../components/LazyImage/LazyImage"; // Lazy loaded images
 
